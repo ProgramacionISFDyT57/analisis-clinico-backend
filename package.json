@@ -1,0 +1,19 @@
+{
+  "name": "analisis-clinico-backend",
+  "version": "1.0.0",
+  "description": "Backend para el sistema de laboratorio de análisis clínico\r hola",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProgramacionISFDyT57/analisis-clinico-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProgramacionISFDyT57/analisis-clinico-backend/issues"
+  },
+  "homepage": "https://github.com/ProgramacionISFDyT57/analisis-clinico-backend#readme"
+}
