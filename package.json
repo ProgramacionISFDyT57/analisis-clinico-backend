@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ProgramacionISFDyT57/analisis-clinico-backend/issues"
   },
-  "homepage": "https://github.com/ProgramacionISFDyT57/analisis-clinico-backend#readme"
+  "homepage": "https://github.com/ProgramacionISFDyT57/analisis-clinico-backend#readme",
+  "dependencies": {
+    "@types/node": "^12.0.8",
+    "typescript": "^3.5.2"
+  }
 }
