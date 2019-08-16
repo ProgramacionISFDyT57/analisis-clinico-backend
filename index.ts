@@ -12,7 +12,7 @@ app.get('/',async(req:Request,res:Response)=>{
 });
 const bd='analisis-clinicos';
 const coleccion='pacientes';
-app.post('/crear',async(req:Request,res:Response)=>{
+async function crear (req:Request,res:Response){
     if(req.body.nombre&&req.body.apellido&&req.body.dni&&req.body.telefono){
         const paciente2:Paciente={
             nombre:req.body.nombre,
@@ -33,7 +33,9 @@ app.post('/crear',async(req:Request,res:Response)=>{
     else{ 
         console.log()
         res.status(400).send()}
-});
+}
+app.post('/crear',crear);
+   
 app.get('/listarpacientes',async(req:Request,res:Response)=>{
     const db=conexión.db(bd);
     try{
