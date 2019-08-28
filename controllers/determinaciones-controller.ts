@@ -68,8 +68,7 @@ export class DeterminacionesController{
           try{
               const del=await db.collection(this.coleccion).updateOne({_id:id},
           {$set:req.body})
-          console.log('se borraron'+del.result.n);
-          console.log('Se modifico correctamente');
+         console.log('Se modifico correctamente');
           res.send()
         }catch(err){
             console.log(err);
