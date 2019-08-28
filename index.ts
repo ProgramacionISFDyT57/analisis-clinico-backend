@@ -5,6 +5,8 @@ import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import{Paciente} from './models/paciente';
 import { PacienteController } from './controllers/paciente-controller';
+import { MedicoController } from './controllers/medico-controller';
+import { DeterminacionesController } from './controllers/determinaciones-controller';
 const app = express();
 app.use(bodyparser.json());
 const port = 4000;
@@ -19,9 +21,20 @@ app.delete('/pacientes/:_id',pacientesController.Borrar);
 app.post('/pacientes',pacientesController.Crear);        
 app.get('/pacientes',pacientesController.Listarpacientes);
 
+const medicoController=new MedicoController(conexion,bd);
+app.delete('/medico/:_id',medicoController.Borrar);
+app.post('/medico',medicoController.Cargar);
+app.get('/medico',medicoController.Listarmedicos);
+
+const determinacionescontroller=new DeterminacionesController(conexion,bd);
+app.delete('/determinaciones/:_id',determinacionescontroller.Borrar);
+app.post('/determinaciones',determinacionescontroller.Cargar);
+app.get('/determinaciones',determinacionescontroller.Listardeterminaciones);
+app.put('/determinaciones/:_id',determinacionescontroller.Modificar);
 
 
-conexión.connect().then(async()=>{
+
+conexion.connect().then(async()=>{
     app.listen(port, () => {
         console.log(`Servidor de ejemplo escuchando en puerto ${port}!`);
     });
