@@ -4,7 +4,7 @@ import {Medico} from '../models/medico';
 export class MedicoController{
     private conexion:MongoClient;
     private bd:string;
-    private coleccion="pacientes";
+    private coleccion="medico";
     constructor(conectar:MongoClient,base:string){
         this.bd=base;
        this.conexion=conectar;

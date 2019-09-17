@@ -5,7 +5,7 @@ import { RSA_NO_PADDING } from 'constants';
 export class DeterminacionesController{
     private conexion:MongoClient;
     private bd:string;
-    private coleccion="pacientes";
+    private coleccion="determinaciones";
     constructor(conectar:MongoClient,base:string){
        this.bd=base;
        this.conexion=conectar;
@@ -15,11 +15,12 @@ export class DeterminacionesController{
        this.Modificar=this.Modificar.bind(this);
     }
     public async Cargar (req:Request,res:Response){
-        if(req.body.nombre&&req.body.valor&&req.body.valoresDeReferencia&&req.body.codigo){
+        if(req.body.nombre&&req.body.valor&&req.body.valoresDeReferencia&&req.body.unidad&&req.body.codigo){
             const determinaciones2:Determinaciones={
                 nombre:req.body.nombre,
                 valor:req.body.valor,
                 valoresDeReferencia:req.body.valoresDeReferencia,
+                unidad:req.body.unidad,
                 codigo:req.body.codigo,
             }
         const db=this.conexion.db(this.bd);
@@ -34,7 +35,7 @@ export class DeterminacionesController{
         }
         else{ 
             console.log()
-            res.status(400).send()
+            res.status(400).send('falta algun campo para cargar una derminacion')
         }  
     }
     public async Listardeterminaciones (req:Request,res:Response){
@@ -64,7 +65,7 @@ export class DeterminacionesController{
     public async Modificar (req:Request,res:Response){
         const db=this.conexion.db(this.bd);
         const id=new ObjectId(req.params._id);
-       if(req.body.valor||req.body.valoresDeReferencia){
+       if(req.body.valor||req.body.valoresDeReferencia||req.body.unidad){
           try{
               const del=await db.collection(this.coleccion).updateOne({_id:id},
           {$set:req.body})

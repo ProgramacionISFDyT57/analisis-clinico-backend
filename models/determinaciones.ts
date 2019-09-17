@@ -1,7 +1,8 @@
 export interface Determinaciones{
     nombre:string;
-    valor:string;
+    valor:number;
     valoresDeReferencia:string;
+    unidad:string;
     codigo:number;
 
 }
