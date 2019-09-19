@@ -38,7 +38,7 @@ app.delete('/especialidad/:_id', especialidadescontroller.Borrar);
 app.post('/especialidad', especialidadescontroller.Cargar);
 app.get('/especialidad',especialidadescontroller.Listarespecialidades);
 app.put('/especialidad/:_id',especialidadescontroller.Modificar);
-
+app.put('/modificar-especialidad/:_id',especialidadescontroller.Agregardeterminacion);
 
 
 conexion.connect().then(async()=>{

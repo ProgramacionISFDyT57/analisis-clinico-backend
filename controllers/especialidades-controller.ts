@@ -4,6 +4,7 @@ import {Especialidades} from '../models/especialidades';
 import { DeterminacionesController } from './determinaciones-controller';
 import { EspecialidadesDto } from '../models/especialidades-dto';
 import { Determinaciones } from '../models/determinaciones';
+import { request } from 'http';
 export class EspecialidadesController{
     private conexion:MongoClient;
     private bd:string;
@@ -15,6 +16,8 @@ export class EspecialidadesController{
        this.Listarespecialidades=this.Listarespecialidades.bind(this);
        this.Borrar=this.Borrar.bind(this);
        this.Modificar=this.Modificar.bind(this);
+       this.Agregardeterminacion=this.Agregardeterminacion.bind(this);
+
     }
     public async Cargar (req:Request,res:Response){
         if(req.body.especialidad&&req.body.determinaciones){
@@ -60,6 +63,7 @@ export class EspecialidadesController{
              const especialidad=await db.collection(this.coleccion).find().toArray();
              for(const esp of especialidad){
                  const especialidadnueva:EspecialidadesDto={
+                     id:esp._id,
                      determinaciones:[],
                     especialidad:esp.especialidad
                  }
@@ -115,8 +119,33 @@ export class EspecialidadesController{
         else{
             (console.log('No se modifico ningun parametro'));
         res.status(400).send()
+      }}
+    public async Agregardeterminacion (req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+        try{
+        const id=new ObjectId(req.params._id);
+        const espe=await db.collection('especialidades').findOne({_id:id})
+        if(espe){
+            const iddet=new ObjectId(req.body._id);
+            const deter=await db.collection('determinaciones').findOne({_id:iddet})
+            if(deter){
+            let nuevaesp:string[]=espe.determinaciones;
+            nuevaesp.push(req.body._id);
+            const result=await db.collection(this.coleccion).updateOne({_id:id},
+                {$set:{determinaciones:nuevaesp}})
+            }
+            else{res.status(404).send('no se encontro la determinacion');
+            }
+        }
+        else{res.satatus(404).send('no se encontro la especialidad');
+        }
+      }catch(err){
+          console.log(err);
+          res.sattus(500).json(err);
       }
-   }
-}
+    
+    }
+ }
+
 
 
