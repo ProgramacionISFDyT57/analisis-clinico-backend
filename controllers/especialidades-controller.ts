@@ -60,7 +60,7 @@ export class EspecialidadesController{
         const db=this.conexion.db(this.bd);
         try{
             const especialidadarreglo:EspecialidadesDto[]=[];
-             const especialidad=await db.collection(this.coleccion).find().toArray();
+             const especialidad=await db.collection(this.coleccion ).find().toArray();
              for(const esp of especialidad){
                  const especialidadnueva:EspecialidadesDto={
                      id:esp._id,

@@ -8,6 +8,7 @@ import { PacienteController } from './controllers/paciente-controller';
 import { MedicoController } from './controllers/medico-controller';
 import { DeterminacionesController } from './controllers/determinaciones-controller';
 import { EspecialidadesController} from './controllers/especialidades-controller';
+import { Analisiscontroller } from './controllers/analisis-controller';
 const app = express();
 app.use(bodyparser.json());
 const port = 4000;
@@ -39,6 +40,10 @@ app.post('/especialidad', especialidadescontroller.Cargar);
 app.get('/especialidad',especialidadescontroller.Listarespecialidades);
 app.put('/especialidad/:_id',especialidadescontroller.Modificar);
 app.put('/modificar-especialidad/:_id',especialidadescontroller.Agregardeterminacion);
+
+const analisiscontroller=new Analisiscontroller(conexion,bd);
+app.post('/analisis', analisiscontroller.Cargar);
+app.get('/analisis', analisiscontroller.Listaranalisis);
 
 
 conexion.connect().then(async()=>{
