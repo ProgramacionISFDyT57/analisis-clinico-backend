@@ -5,10 +5,12 @@ import { DeterminacionesController } from './determinaciones-controller';
 import { EspecialidadesDto } from '../models/especialidades-dto';
 import { Determinaciones } from '../models/determinaciones';
 import { request } from 'http';
+import { Especialidadesservice } from '../service/especialidades-service';
 export class EspecialidadesController{
     private conexion:MongoClient;
     private bd:string;
     private coleccion="especialidades";
+    private especialidadesservice:Especialidadesservice;
     constructor(conectar:MongoClient,base:string){
        this.bd=base;
        this.conexion=conectar;
@@ -17,6 +19,8 @@ export class EspecialidadesController{
        this.Borrar=this.Borrar.bind(this);
        this.Modificar=this.Modificar.bind(this);
        this.Agregardeterminacion=this.Agregardeterminacion.bind(this);
+       const db=this.conexion.db(this.bd);
+       this.especialidadesservice= new Especialidadesservice(db);
 
     }
     public async Cargar (req:Request,res:Response){
@@ -108,10 +112,9 @@ export class EspecialidadesController{
         const id=new ObjectId(req.params._id);
        if(req.body.especialidad||req.body.determinaciones){
           try{
-              const del=await db.collection(this.coleccion).updateOne({_id:id},
-          {$set:req.body})
-         console.log('Se modifico correctamente');
-          res.send()
+            await this.especialidadesservice.modificarespecialidades(req.params._id,req.body);
+              console.log('Se modifico correctamente');
+                res.send()
         }catch(err){
             console.log(err);
             res.status(500).json(err);
@@ -133,6 +136,7 @@ export class EspecialidadesController{
             nuevaesp.push(req.body._id);
             const result=await db.collection(this.coleccion).updateOne({_id:id},
                 {$set:{determinaciones:nuevaesp}})
+                res.send('Se agrego la determinacion');
             }
             else{res.status(404).send('no se encontro la determinacion');
             }
