@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId, Db } from 'mongodb';
 import{Paciente} from '../models/paciente';
 import{PacienteService} from '../service/paciente-service';
 export class PacienteController{
@@ -13,6 +13,7 @@ export class PacienteController{
        this.Crear=this.Crear.bind(this);
        this.Listarpacientes=this.Listarpacientes.bind(this);
        this.Borrar=this.Borrar.bind(this);
+       this.Buscarpaciente=this.Buscarpaciente.bind(this);
        const db=this.conexion.db(this.bd);
        this.pacienteservice= new PacienteService(db);
     }
@@ -59,5 +60,18 @@ export class PacienteController{
             console.log(err);
             res.status(500).json(err);
         }
-        };
+   };
+    public async Buscarpaciente(req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+        let nom=req.params.Buscarpaciente;
+        try{
+            const Buscarpaciente= await this.pacienteservice.buscarpaciente(req.params._id);
+            console.log('paciente encontrado');
+            res.send()
+        }catch (err){
+            console.log(err);
+            res.status(500).json(err);
+        }
+
+    }
 }

@@ -1,5 +1,6 @@
 import{Paciente} from '../models/paciente';
 import { Collection,Db, ObjectId } from 'mongodb';
+import { rejects } from 'assert';
 export class PacienteService {
     private paciente:Collection<any>;
     constructor(db:Db){
@@ -42,6 +43,18 @@ export class PacienteService {
             catch(err){
                 rejects(err);
             }
+       })
+   }
+   public buscarpaciente (idpaciente:string):Promise<Paciente>{
+       return new Promise (async(resolve,rejects)=>{
+           try{
+               const id=new ObjectId(idpaciente);
+               const buscar=await this.paciente.findOne({_id:id});
+               resolve(buscar);
+           }
+           catch(err){
+            rejects(err);
+           }
        })
    }
 }
