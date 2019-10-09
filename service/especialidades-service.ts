@@ -57,4 +57,16 @@ export class Especialidadesservice{
              }
        })
    }
+   public buscarespecialidad (idespecialidad:string):Promise<Especialidades>{
+    return new Promise (async(resolve,rejects)=>{
+        try{
+            const id=new ObjectId(idespecialidad);
+            const buscar=await this.especialidades.findOne({_id:id});
+            resolve(buscar);
+        }
+        catch(err){
+         rejects(err);
+        }
+    })
+}
 }

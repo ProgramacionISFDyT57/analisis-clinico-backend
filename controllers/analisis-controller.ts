@@ -4,12 +4,15 @@ import {Analisis} from '../models/analasis';
 import{AnalisisService} from '../service/analisis-service';
 import { RSA_NO_PADDING } from 'constants';
 import { PacienteService } from '../service/paciente-service';
+import { Determinacionesservice } from '../service/determinaciones-service';
+import{Especialidadesservice} from '../service/especialidades-service';
 export class Analisiscontroller{
     private conexion:MongoClient;
     private bd:string;
     private coleccion="analisis";
     private analisisservice: AnalisisService;
     private pacienteservice: PacienteService;
+    private especialidadesservice: Especialidadesservice;
     constructor(conectar:MongoClient,base:string){
        this.bd=base;
        this.conexion=conectar;
@@ -18,6 +21,7 @@ export class Analisiscontroller{
        const db=this.conexion.db(this.bd);
        this.analisisservice= new AnalisisService(db);
        this.pacienteservice= new PacienteService(db);
+       this.especialidadesservice= new Especialidadesservice(db);
     }
     public async Cargar(req:Request,res:Response){
         if(req.body.pacienteid&&req.body.medico&&req.body.codigo&&req.body.especialidades){
@@ -36,8 +40,7 @@ export class Analisiscontroller{
                 if(pacientedb){
                     let v=true;
                     for(const idespecialidad of req.body.especialidades){
-                        const espe=new ObjectId(idespecialidad);
-                        const espedb=await db.collection('especialidades').findOne({_id:espe})
+                        const espedb=await this.especialidadesservice.buscarespecialidad(req.body.especialidad);
                         if(!espedb){
                              v=false;
                         } 

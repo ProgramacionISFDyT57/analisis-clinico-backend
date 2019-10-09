@@ -21,6 +21,7 @@ export class EspecialidadesController{
        this.Agregardeterminacion=this.Agregardeterminacion.bind(this);
        const db=this.conexion.db(this.bd);
        this.especialidadesservice= new Especialidadesservice(db);
+       this.Buscarespecialidad= this.Buscarespecialidad.bind(this);
 
     }
     public async Cargar (req:Request,res:Response){
@@ -148,6 +149,19 @@ export class EspecialidadesController{
           res.sattus(500).json(err);
       }
     
+    }
+    public async Buscarespecialidad(req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+        let nom=req.params.Buscarespecialidad;
+        try{
+            const Buscarespecialidad= await this.especialidadesservice.buscarespecialidad(req.params._id);
+            console.log('es encontrado');
+            res.send()
+        }catch (err){
+            console.log(err);
+            res.status(500).json(err);
+        }
+
     }
  }
 

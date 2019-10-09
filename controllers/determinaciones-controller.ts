@@ -17,6 +17,7 @@ export class DeterminacionesController{
        this.Modificar=this.Modificar.bind(this);
        const db=this.conexion.db(this.bd);
        this.determinacionesservice= new Determinacionesservice(db);
+       
     }
     public async Cargar (req:Request,res:Response){
         if(req.body.nombre&&req.body.valor&&req.body.valoresDeReferencia&&req.body.unidad&&req.body.codigo){
