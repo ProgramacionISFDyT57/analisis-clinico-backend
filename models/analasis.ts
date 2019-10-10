@@ -1,7 +1,7 @@
 export interface Analisis{
-    nombre:string;
-    apellido:string;
-    fecha:number;
+    pacienteid:string;
+    fecha:string;
     medico:string;
     codigo:number;
+   especialidades:string[];
 }

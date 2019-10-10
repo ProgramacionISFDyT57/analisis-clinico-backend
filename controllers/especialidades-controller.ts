@@ -4,10 +4,13 @@ import {Especialidades} from '../models/especialidades';
 import { DeterminacionesController } from './determinaciones-controller';
 import { EspecialidadesDto } from '../models/especialidades-dto';
 import { Determinaciones } from '../models/determinaciones';
+import { request } from 'http';
+import { Especialidadesservice } from '../service/especialidades-service';
 export class EspecialidadesController{
     private conexion:MongoClient;
     private bd:string;
     private coleccion="especialidades";
+    private especialidadesservice:Especialidadesservice;
     constructor(conectar:MongoClient,base:string){
        this.bd=base;
        this.conexion=conectar;
@@ -15,6 +18,11 @@ export class EspecialidadesController{
        this.Listarespecialidades=this.Listarespecialidades.bind(this);
        this.Borrar=this.Borrar.bind(this);
        this.Modificar=this.Modificar.bind(this);
+       this.Agregardeterminacion=this.Agregardeterminacion.bind(this);
+       const db=this.conexion.db(this.bd);
+       this.especialidadesservice= new Especialidadesservice(db);
+       this.Buscarespecialidad= this.Buscarespecialidad.bind(this);
+
     }
     public async Cargar (req:Request,res:Response){
         if(req.body.especialidad&&req.body.determinaciones){
@@ -57,9 +65,10 @@ export class EspecialidadesController{
         const db=this.conexion.db(this.bd);
         try{
             const especialidadarreglo:EspecialidadesDto[]=[];
-             const especialidad=await db.collection(this.coleccion).find().toArray();
+             const especialidad=await db.collection(this.coleccion ).find().toArray();
              for(const esp of especialidad){
                  const especialidadnueva:EspecialidadesDto={
+                     id:esp._id,
                      determinaciones:[],
                     especialidad:esp.especialidad
                  }
@@ -104,10 +113,9 @@ export class EspecialidadesController{
         const id=new ObjectId(req.params._id);
        if(req.body.especialidad||req.body.determinaciones){
           try{
-              const del=await db.collection(this.coleccion).updateOne({_id:id},
-          {$set:req.body})
-         console.log('Se modifico correctamente');
-          res.send()
+            await this.especialidadesservice.modificarespecialidades(req.params._id,req.body);
+              console.log('Se modifico correctamente');
+                res.send()
         }catch(err){
             console.log(err);
             res.status(500).json(err);
@@ -115,8 +123,47 @@ export class EspecialidadesController{
         else{
             (console.log('No se modifico ningun parametro'));
         res.status(400).send()
+      }}
+    public async Agregardeterminacion (req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+        try{
+        const id=new ObjectId(req.params._id);
+        const espe=await db.collection('especialidades').findOne({_id:id})
+        if(espe){
+            const iddet=new ObjectId(req.body._id);
+            const deter=await db.collection('determinaciones').findOne({_id:iddet})
+            if(deter){
+            let nuevaesp:string[]=espe.determinaciones;
+            nuevaesp.push(req.body._id);
+            const result=await db.collection(this.coleccion).updateOne({_id:id},
+                {$set:{determinaciones:nuevaesp}})
+                res.send('Se agrego la determinacion');
+            }
+            else{res.status(404).send('no se encontro la determinacion');
+            }
+        }
+        else{res.satatus(404).send('no se encontro la especialidad');
+        }
+      }catch(err){
+          console.log(err);
+          res.sattus(500).json(err);
       }
-   }
-}
+    
+    }
+    public async Buscarespecialidad(req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+        let nom=req.params.Buscarespecialidad;
+        try{
+            const Buscarespecialidad= await this.especialidadesservice.buscarespecialidad(req.params._id);
+            console.log('es encontrado');
+            res.send()
+        }catch (err){
+            console.log(err);
+            res.status(500).json(err);
+        }
+
+    }
+ }
+
 
 

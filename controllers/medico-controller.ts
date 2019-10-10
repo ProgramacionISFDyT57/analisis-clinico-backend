@@ -1,16 +1,20 @@
 import { Request, Response } from 'express';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId, Db } from 'mongodb';
 import {Medico} from '../models/medico';
+import { MedicoService } from '../service/medico-service';
 export class MedicoController{
     private conexion:MongoClient;
     private bd:string;
     private coleccion="medico";
+    private medicoservice:MedicoService;
     constructor(conectar:MongoClient,base:string){
         this.bd=base;
        this.conexion=conectar;
        this.Cargar=this.Cargar.bind(this);
        this.Listarmedicos=this.Listarmedicos.bind(this);
        this.Borrar=this.Borrar.bind(this);
+       const db=this.conexion.db(this.bd);
+       this.medicoservice= new MedicoService(db);
     }
     public async Cargar (req:Request,res:Response){
         if(req.body.nombre&&req.body.apellido){
@@ -21,7 +25,7 @@ export class MedicoController{
         const db=this.conexion.db(this.bd);
             const MedicoController=db.collection(this.coleccion);
             try{
-                await MedicoController.insertOne(medico2);
+               await this.medicoservice.cargarmedico(medico2);
                 res.send('se pudo cargar el medico')
             }catch(err){
                 console.error(err);
@@ -36,9 +40,9 @@ export class MedicoController{
     public async Listarmedicos (req:Request,res:Response){
         const db=this.conexion.db(this.bd);
         try{
-             const medico=await db.collection(this.coleccion).find().toArray();
-             console.log(medico);
-             res.json(medico);
+            const listadomedicos=await this.medicoservice.listarmedico();
+             console.log(listadomedicos);
+             res.json(listadomedicos);
         }
         catch(err){
             console.log(err);
@@ -47,9 +51,8 @@ export class MedicoController{
     public async Borrar(req:Request,res:Response){
             const db=this.conexion.db(this.bd);
             let nom=req.params.listarmedicos;
-            try{const id=new ObjectId(req.params._id);
-                const del=await db.collection(this.coleccion).deleteOne({"_id":id})
-            console.log('se borraron'+del.result.n);
+            try{
+                const borrarmedico= await this.medicoservice.borrarmedico(req.params._id);
             console.log('se borro correctamente');
             res.send()  
         }catch(err){
