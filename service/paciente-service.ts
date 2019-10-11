@@ -57,4 +57,17 @@ export class PacienteService {
            }
        })
    }
+   public buscadorpaciente (busqueda:any):Promise<Paciente[]>{
+       return new Promise (async(resolve,rejects)=>{
+           try{
+               const pa=await this.paciente.find(busqueda).toArray();
+               resolve(pa);
+           }
+            catch(err){
+           rejects(err);
+       }
+
+   })
+}
+
 }

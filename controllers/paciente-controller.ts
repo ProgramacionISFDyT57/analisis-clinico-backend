@@ -13,9 +13,11 @@ export class PacienteController{
        this.Crear=this.Crear.bind(this);
        this.Listarpacientes=this.Listarpacientes.bind(this);
        this.Borrar=this.Borrar.bind(this);
-       this.Buscarpaciente=this.Buscarpaciente.bind(this);
+       this.Buscarpaciente=this.Buscarpaciente.bind(this);  
+       this.Buscadorpaciente=this.Buscadorpaciente.bind(this);
        const db=this.conexion.db(this.bd);
        this.pacienteservice= new PacienteService(db);
+       
     }
     
    public async Crear (req:Request,res:Response){
@@ -72,5 +74,17 @@ export class PacienteController{
             console.log(err);
             res.status(500).json(err);
         }
+    }
+    public async Buscadorpaciente(req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+      
+        try{
+            const Buscadorpaciente= await this.pacienteservice.buscadorpaciente(req.query);
+            res.send(Buscadorpaciente);
+        }catch (err){
+            console.log(err);
+        res.status(500).json(err);
+    }
+        
     }
 }

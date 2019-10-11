@@ -26,11 +26,13 @@ conexion.connect().then(async()=>{
     app.delete('/pacientes/:_id',pacientesController.Borrar);
     app.post('/pacientes',pacientesController.Crear);        
     app.get('/pacientes',pacientesController.Listarpacientes);
+    app.get('/buscarpaciente', pacientesController.Buscadorpaciente);
     
     const medicoController=new MedicoController(conexion,bd);
     app.delete('/medico/:_id',medicoController.Borrar);
     app.post('/medico',medicoController.Cargar);
     app.get('/medico',medicoController.Listarmedicos);
+    app.get('/buscarmedico',medicoController.Buscarmedico);
     
     const determinacionescontroller=new DeterminacionesController(conexion,bd);
     app.delete('/determinaciones/:_id',determinacionescontroller.Borrar);

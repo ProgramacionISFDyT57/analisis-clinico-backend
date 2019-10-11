@@ -15,6 +15,7 @@ export class MedicoController{
        this.Borrar=this.Borrar.bind(this);
        const db=this.conexion.db(this.bd);
        this.medicoservice= new MedicoService(db);
+       this.Buscarmedico=this.Buscarmedico.bind(this);
     }
     public async Cargar (req:Request,res:Response){
         if(req.body.nombre&&req.body.apellido){
@@ -58,6 +59,17 @@ export class MedicoController{
         }catch(err){
             console.log(err);
             res.status(500).json(err);
+        }
+    }
+    public async Buscarmedico(req:Request,res:Response){
+        const db=this.conexion.db(this.bd);
+      
+        try{
+            const Buscarmedico= await this.medicoservice.buscarmedico(req.query);
+            res.send(Buscarmedico);
+        }catch (err){
+            console.log(err);
+        res.status(500).json(err);
         }
     }
 }
