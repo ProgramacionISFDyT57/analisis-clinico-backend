@@ -57,5 +57,17 @@ export class Determinacionesservice{
              }
        })
    }
+   public buscardeterminacion (busqueda:any):Promise<Determinaciones[]>{
+    return new Promise (async(resolve,rejects)=>{
+        try{
+            console.log(busqueda);
+         const de=await this.determinaciones.find(busqueda).toArray();
+            resolve(de);
+        }
+        catch(err){
+        rejects(err);
+        }
+    })
+}
 }
 

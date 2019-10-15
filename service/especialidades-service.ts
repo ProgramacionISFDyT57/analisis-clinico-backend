@@ -69,4 +69,15 @@ export class Especialidadesservice{
         }
     })
 }
+public buscarespecialidades (busqueda:any):Promise<Especialidades[]>{
+    return new Promise (async(resolve,rejects)=>{
+        try{
+         const de=await this.especialidades.find(busqueda).toArray();
+            resolve(de);
+        }
+        catch(err){
+        rejects(err);
+        }
+    })
+}
 }

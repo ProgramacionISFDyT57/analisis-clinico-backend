@@ -9,6 +9,7 @@ import { MedicoController } from './controllers/medico-controller';
 import { DeterminacionesController } from './controllers/determinaciones-controller';
 import { EspecialidadesController} from './controllers/especialidades-controller';
 import { Analisiscontroller } from './controllers/analisis-controller';
+import{UsuarioController} from './controllers/usuario-controller';
 const app = express();
 app.use(bodyparser.json());
 const port = 4000;
@@ -39,6 +40,7 @@ conexion.connect().then(async()=>{
     app.post('/determinaciones',determinacionescontroller.Cargar);
     app.get('/determinaciones',determinacionescontroller.Listardeterminaciones);
     app.put('/determinaciones/:_id',determinacionescontroller.Modificar);
+    app.get('/buscardeterminacion',determinacionescontroller.Buscardeterminacion);
     
     const especialidadescontroller=new EspecialidadesController(conexion,bd);
     app.delete('/especialidad/:_id', especialidadescontroller.Borrar);
@@ -46,10 +48,17 @@ conexion.connect().then(async()=>{
     app.get('/especialidad',especialidadescontroller.Listarespecialidades);
     app.put('/especialidad/:_id',especialidadescontroller.Modificar);
     app.put('/modificar-especialidad/:_id',especialidadescontroller.Agregardeterminacion);
-    
+    app.get('/buscarespecialidades',especialidadescontroller.Buscarespecialidades);
     const analisiscontroller=new Analisiscontroller(conexion,bd);
     app.post('/analisis', analisiscontroller.Cargar);
     app.get('/analisis', analisiscontroller.Listaranalisis);
+
+    const usuarioController=new UsuarioController(conexion,bd);
+    app.post('/usuario',usuarioController.Cargar);
+    app.get('/usuario',usuarioController.Listarusuarios);
+    app.put('/usuario',usuarioController.Modificar);
+    app.delete('/usuario',usuarioController.Borrar);
+
     
     
     app.listen(port, () => {
