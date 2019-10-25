@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { MongoClient, ObjectId, Db } from 'mongodb';
 import {Usuario} from '../models/usuario';
 import { UsuarioService } from '../service/usuario-service';
+import bcrypt= require('bcryptjs');
 export class UsuarioController{
     private conexion:MongoClient;
     private bd:string;
@@ -19,16 +20,15 @@ export class UsuarioController{
     }
     public async Cargar (req:Request,res:Response){
         if(req.body.nombre&&req.body.mail&&req.body.clave){
-            const usuario2:Usuario={
+            try{
+                const hash= await bcrypt.hash(req.body.clave,5)
+                const usuario2:Usuario={
                 nombre:req.body.nombre,
                 mail:req.body.mail,
-                clave:req.body.clave,
-            }
-        const db=this.conexion.db(this.bd);
-            const UsuarioController=db.collection(this.coleccion);
-            try{
+                clave:hash,
+                }
                await this.usuarioservice.cargarusuario(usuario2);
-                res.send('se pudo cargar el usuario')
+                res.send('se pudo cargar el usuario');
             }catch(err){
                 console.error(err);
                 res.status(500).json(err);
@@ -77,5 +77,14 @@ public async Modificar (req:Request,res:Response){
     else{
         (console.log('No se modifico ningun parametro'));
     res.status(400).send()
-  }
-}}
+  }}
+  public async Buscarusuario(req:Request,res:Response){
+    try{
+        const Buscarusuario= await this.usuarioservice.buscarusuario(req.query);
+        res.send(Buscarusuario);
+    }catch (err){
+        console.log(err);
+    res.status(500).json(err);
+    }
+}
+}

@@ -56,4 +56,15 @@ export class UsuarioService {
           }
     })
 }
+public buscarusuario (mail:string):Promise<Usuario>{
+    return new Promise (async(resolve,rejects)=>{
+        try{
+         const de=await this.usuario.findOne({mail:mail});
+            resolve(de);
+        }
+        catch(err){
+        rejects(err);
+        }
+    })
+}
     }

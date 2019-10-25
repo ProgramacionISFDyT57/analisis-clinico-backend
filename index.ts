@@ -10,6 +10,7 @@ import { DeterminacionesController } from './controllers/determinaciones-control
 import { EspecialidadesController} from './controllers/especialidades-controller';
 import { Analisiscontroller } from './controllers/analisis-controller';
 import{UsuarioController} from './controllers/usuario-controller';
+import { AutenticacionController } from './controllers/autenticacion-controller';
 const app = express();
 app.use(bodyparser.json());
 const port = 4000;
@@ -59,7 +60,8 @@ conexion.connect().then(async()=>{
     app.put('/usuario',usuarioController.Modificar);
     app.delete('/usuario',usuarioController.Borrar);
 
-    
+    const autenticacioncontroller=new AutenticacionController(conexion,bd);
+    app.post('/login',autenticacioncontroller.login);
     
     app.listen(port, () => {
         console.log(`Servidor de ejemplo escuchando en puerto ${port}!`);
