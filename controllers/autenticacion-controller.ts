@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response,NextFunction } from 'express';
 import { MongoClient, ObjectId, Db } from 'mongodb';
 import { UsuarioService } from '../service/usuario-service';
 import bcrypt= require('bcryptjs');
@@ -13,6 +13,7 @@ export class AutenticacionController{
         const db=this.conexion.db(base);
        this.login= this.login.bind(this);
        this.usuarioservice= new UsuarioService(db);
+       this.autenticacion=this.autenticacion.bind(this);
 }
 public async login (req:Request,res:Response){
     if(req.body.mail&&req.body.clave){
@@ -46,6 +47,21 @@ public async login (req:Request,res:Response){
      }
     else {
         console.log('faltan parametros');
+    }
+}
+public async autenticacion (req:Request,res:Response,next:NextFunction){
+    const token=req.get('token');
+    try{
+        if(token){
+             const resultado=jwt.verify(token,this.contraseña);
+             res.locals=resultado;
+             next();
+         }
+        else {
+        res.status(401).send('no se encontro el token');
+        }
+    }catch(err){
+        console.log(err);
     }
 }
 }

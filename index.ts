@@ -23,11 +23,16 @@ conexion.connect().then(async()=>{
     });
     const bd='laboratorio';
     const coleccion='pacientes';
+    const autenticacioncontroller=new AutenticacionController(conexion,bd);
+    app.post('/login',autenticacioncontroller.login);
+
+    app.use(autenticacioncontroller.autenticacion);
 
     const pacientesController=new PacienteController(conexion,bd);   
     app.delete('/pacientes/:_id',pacientesController.Borrar);
     app.post('/pacientes',pacientesController.Crear);        
     app.get('/pacientes',pacientesController.Listarpacientes);
+
     app.get('/buscarpaciente', pacientesController.Buscadorpaciente);
     
     const medicoController=new MedicoController(conexion,bd);
@@ -60,8 +65,7 @@ conexion.connect().then(async()=>{
     app.put('/usuario',usuarioController.Modificar);
     app.delete('/usuario',usuarioController.Borrar);
 
-    const autenticacioncontroller=new AutenticacionController(conexion,bd);
-    app.post('/login',autenticacioncontroller.login);
+    
     
     app.listen(port, () => {
         console.log(`Servidor de ejemplo escuchando en puerto ${port}!`);
