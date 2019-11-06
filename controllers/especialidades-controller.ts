@@ -22,6 +22,7 @@ export class EspecialidadesController{
        const db=this.conexion.db(this.bd);
        this.especialidadesservice= new Especialidadesservice(db);
        this.Buscarespecialidad= this.Buscarespecialidad.bind(this);
+       this.Buscarespecialidades=this.Buscarespecialidades.bind(this);
 
     }
     public async Cargar (req:Request,res:Response){
@@ -162,6 +163,15 @@ export class EspecialidadesController{
             res.status(500).json(err);
         }
 
+    }
+    public async Buscarespecialidades(req:Request,res:Response){
+        try{
+            const Buscarespecialidad= await this.especialidadesservice.buscarespecialidad(req.query);
+            res.send(Buscarespecialidad);
+        }catch (err){
+            console.log(err);
+        res.status(500).json(err);
+        }
     }
  }
 

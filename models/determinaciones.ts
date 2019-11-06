@@ -4,5 +4,4 @@ export interface Determinaciones{
     valoresDeReferencia:string;
     unidad:string;
     codigo:number;
-
 }

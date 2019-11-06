@@ -44,4 +44,15 @@ export class MedicoService {
             }
        })
    }
+   public buscarmedico (busqueda:any):Promise<Medico[]>{
+        return new Promise (async(resolve,rejects)=>{
+            try{
+             const me=await this.medico.find(busqueda).toArray();
+                resolve(me);
+            }
+            catch(err){
+            rejects(err);
+            }
+        })
+    }
 }

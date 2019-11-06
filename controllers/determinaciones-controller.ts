@@ -17,6 +17,7 @@ export class DeterminacionesController{
        this.Modificar=this.Modificar.bind(this);
        const db=this.conexion.db(this.bd);
        this.determinacionesservice= new Determinacionesservice(db);
+       this.Buscardeterminacion=this.Buscardeterminacion.bind(this);
        
     }
     public async Cargar (req:Request,res:Response){
@@ -83,5 +84,14 @@ export class DeterminacionesController{
         res.status(400).send()
       }
    }
+   public async Buscardeterminacion(req:Request,res:Response){
+    try{
+        const Buscardeterminacion= await this.determinacionesservice.buscardeterminacion(req.query);
+        res.send(Buscardeterminacion);
+    }catch (err){
+        console.log(err);
+    res.status(500).json(err);
+    }
+}
 }
 
