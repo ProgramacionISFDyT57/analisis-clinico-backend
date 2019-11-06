@@ -55,9 +55,12 @@ conexion.connect().then(async()=>{
     app.put('/especialidad/:_id',especialidadescontroller.Modificar);
     app.put('/modificar-especialidad/:_id',especialidadescontroller.Agregardeterminacion);
     app.get('/buscarespecialidades',especialidadescontroller.Buscarespecialidades);
+
     const analisiscontroller=new Analisiscontroller(conexion,bd);
     app.post('/analisis', analisiscontroller.Cargar);
     app.get('/analisis', analisiscontroller.Listaranalisis);
+    app.get('/buscaranalisis',analisiscontroller.Buscaranalisis);
+    app.put('/modificaranalisis',analisiscontroller.Modificar);
 
     const usuarioController=new UsuarioController(conexion,bd);
     app.post('/usuario',usuarioController.Cargar);

@@ -43,5 +43,29 @@ export class AnalisisService {
                 rejects(err);
             }
        })
-   }
+    }
+    public buscaranalisis (busqueda:any):Promise<Analisis[]>{
+        return new Promise (async(resolve,rejects)=>{
+            try{
+                const ana=await this.analisis.find(busqueda).toArray();
+                resolve(ana);
+            }
+             catch(err){
+            rejects(err);
+        }
+ 
+        })
+    }
+    public modificaranalisis (idanalisis:string,valor:any):Promise<void>{
+        return new Promise (async(resolve,rejects)=>{
+            try{
+                const id=new ObjectId(idanalisis);
+                const mod= await this.analisis.updateOne({_id:id},{$set:valor})
+                resolve();
+            }
+             catch(err){
+             rejects(err);
+              }
+        })   
+     }
 }

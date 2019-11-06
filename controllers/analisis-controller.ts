@@ -22,6 +22,8 @@ export class Analisiscontroller{
        this.analisisservice= new AnalisisService(db);
        this.pacienteservice= new PacienteService(db);
        this.especialidadesservice= new Especialidadesservice(db);
+       this.Buscaranalisis=this.Buscaranalisis.bind(this);
+       this.Modificar=this.Modificar.bind(this);
     }
     public async Cargar(req:Request,res:Response){
         if(req.body.pacienteid&&req.body.medico&&req.body.codigo&&req.body.especialidades){
@@ -40,7 +42,7 @@ export class Analisiscontroller{
                 if(pacientedb){
                     let v=true;
                     for(const idespecialidad of req.body.especialidades){
-                        const espedb=await this.especialidadesservice.buscarespecialidad(req.body.especialidad);
+                        const espedb=await this.especialidadesservice.buscarespecialidad(idespecialidad);
                         if(!espedb){
                              v=false;
                         } 
@@ -68,16 +70,49 @@ export class Analisiscontroller{
         }  
     }
     public async Listaranalisis (req:Request,res:Response){
-        const db=this.conexion.db(this.bd);
         try{
-            const listadodeanalisis=await db.collection('analisis').find().toArray();
-            console.log(listadodeanalisis);
+            const listadodeanalisis=await this.analisisservice.listaranalisis;
             res.json(listadodeanalisis);
         }
         catch(err){
             console.log(err);
             res.status(500).json(err);
         }}
+    public async Buscaranalisis(req:Request,res:Response){
+         const db=this.conexion.db(this.bd);
+          
+         try{
+            const Buscaranalisis= await this.analisisservice.buscaranalisis(req.query);
+            if(Buscaranalisis.length===0){
+                res.send('no se encuentra el analisis')
+            }
+            else{
+            res.json(Buscaranalisis);
+            }
+        }catch (err){
+            console.log(err);
+            res.status(500).json(err);
+        }
+        }
+        public async Modificar (req:Request,res:Response){
+            const db=this.conexion.db(this.bd);
+            const id=new ObjectId(req.params._id);
+           if(req.body.pacienteid||req.body.fecha||req.body.medico||req.body.codigo||req.body.especialidades){
+              try{
+                await this.analisisservice.modificaranalisis(req.params._id,req.body);
+                  console.log('Se modifico correctamente');
+                    res.send()
+            }catch(err){
+                console.log(err);
+                res.status(500).json(err);
+            }}
+            else{
+                (console.log('No se modifico ningun parametro'));
+            res.status(400).send()
+          }}
     }
+    
+    
+
 
     
