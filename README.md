@@ -11,4 +11,15 @@ se registra cada paciente y sus determinaciones correspondientes. Optimizar un 5
 <br>-Almacenando la información de manera digital, se va a lograr más espacio físico.
 <br>-Almacenando la información en la nube, se va a lograr que la misma este mas segura.
 
+**RUTA** https://localhost:4000
+
+**Autenticación**
+Todas las rutas (excepto /login) deben recibir el siguiente header
+<br>**Header**
+<br>
+[{ 
+<br>"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" <br>
+}]
+
+
 
