@@ -14,12 +14,26 @@ se registra cada paciente y sus determinaciones correspondientes. Optimizar un 5
 **RUTA** https://localhost:4000
 
 **Autenticación**
-Todas las rutas (excepto /login) deben recibir el siguiente header
-<br>**Header**
-<br>
-[{ 
+<br>Todas las rutas (excepto /login) deben recibir el siguiente header.
+<br>**Header**<br>
+{ 
 <br>"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" <br>
-}]
+}<br>
+<br>**LOGIN**<br>
+<br>**POST/LOGIN**<br>
+<br>Devuelve token de autenticación requerido para el resto de los Requests.
+<br>
+<br>**Request body**
+<br>{
+	<br>"email": "usuario@hotmail.com",
+	<br>"clave": "5050"
+<br>}
+<br>
+<br>**Formato de respuesta**
+<br>{
+<br>"mensaje":"sesión iniciada",
+<br>"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+<br>}
 
 
 
