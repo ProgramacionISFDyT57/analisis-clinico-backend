@@ -34,6 +34,40 @@ se registra cada paciente y sus determinaciones correspondientes. Optimizar un 5
 <br>"mensaje":"sesión iniciada",
 <br>"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
 <br>}
+<br>**PACIENTES**<br>
+<br>**GET/pacientes**<br>
+<br>Devuelve el listado de todos los pacientes<br>
+<br>**Requiere rol de acceso**<br>
+-Técnicos y bioquimicos<br>
+<br>**Formato de respuesta**<br>
+<br>[<br>
+   {
+        "_id": "1",<br>
+        "nombre": "",<br>
+        "apellido": "",<br>
+        "dni": "",<br>
+        "telefono":"" <br>
+    }<br>
+]<br>
+<br>**POST/pacientes**<br>
+<br>Crea un usuario<br>
+<br>**Requiere rol de acceso**<br>
+-Técnicos y bioquímicos<br>
+<br>**Request body**<br>
+<br>[<br>
+<br>{<br>
+nombre:"";<br>
+apellido:"";<br>
+dni:"";<br>
+telefono:"";<br>
+<br>}<br>
+]<br>
+<br>**Formato de respuesta**
+<br>{<br>
+<br>"mensaje":"Se pudo cargar el paciente"<br>
+<br>}
+
+
 
 
 
