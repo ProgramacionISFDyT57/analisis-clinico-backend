@@ -78,18 +78,21 @@ telefono:"";<br>
         <br>"telefono":" "
     <br>}
     <br>]
-<br>**POST/Medico**
+<br>**MEDICO**
+<br><br>**POST/Medico**
 <br>Carga un medico
 <br><br>**Request body**
 <br>[
 <br>{
 <br>"nombre":" ",
 <br>"apellido":" "
-<br}
+<br>}
 <br>]
 <br>**Formato de respuesta**
+<br>{
 <br>Mensaje:"se pudo cargar el medico"
-<br>**GET/Medico**
+<br>}
+<br><br>**GET/Medico**
 <br>Devuelve el listado de los medicos
 <br><br> **Formato de respuesta**
 <br>[
@@ -99,6 +102,42 @@ telefono:"";<br>
         <br>"apellido": ""
     <br>}
 <br>]
+<br>**DETERMINACIONES**
+<br><br>**POST/determinaciones**
+<br>Crea una determinacion
+<br>**Request body**
+<br>[
+<br>{
+    <br>nombre:" ",
+    <br>valor:" ",
+    <br>valoresDeReferencia:" ",
+    <br>unidad:"",
+    <br>codigo:" "
+<br>}
+<br>]
+<br>**Formato de respuesta**
+<br>{
+<br>"mensaje":"se pudo cargar la determinación"
+<br>}
+<br>**GET/determinaciones**
+<br>Devuelve el listado de las determinaciones
+<br>**Formato de respuesta**
+<br>[
+<br>{
+        <br>"_id": "",
+        <br>"nombre": "",
+        <br>"valor": "",
+        <br>"valoresDeReferencia":"",
+        <br>"unidad": "",
+        <br>"codigo": 
+    <br>}
+    <br>]
+ <br><br>**ESPECIALIDAD**
+ <br>**GET/especialidad**
+ <br>Crea una especialidad
+ <br>**Request body**
+ <br>[
+ <br>{
 
 
 
