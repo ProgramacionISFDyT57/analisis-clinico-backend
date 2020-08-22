@@ -66,19 +66,7 @@ telefono:"";<br>
 <br>{<br>
 <br>"mensaje":"Se pudo cargar el paciente"<br>
 <br>}
-<br>**GET/Pacientes**<br>
-<br>Devuelve el listado de todos los pacientes<br>
-<br>**Formato de respuesta**
-<br>[
-<br>{
-        <br>"_id": "5d8d4d9a64069925984ef2b7",
-        <br>"nombre": " ",
-        <br>"apellido":" ",
-        <br>"dni":" ",
-        <br>"telefono":" "
-    <br>}
-    <br>]
-<br>**MEDICO**
+<br><br>**MEDICO**
 <br><br>**POST/Medico**
 <br>Carga un medico
 <br><br>**Request body**
@@ -102,7 +90,7 @@ telefono:"";<br>
         <br>"apellido": ""
     <br>}
 <br>]
-<br>**DETERMINACIONES**
+<br><br>**DETERMINACIONES**
 <br><br>**POST/determinaciones**
 <br>Crea una determinacion
 <br>**Request body**
@@ -133,7 +121,7 @@ telefono:"";<br>
     <br>}
     <br>]
  <br><br>**ESPECIALIDAD**
- <br>**GET/especialidad**
+ <br>**POST/especialidad**
  <br>Crea una especialidad
  <br>**Request body**
  <br>[
@@ -155,7 +143,7 @@ telefono:"";<br>
     <br>}
     <br>]
  <br><br>**ANALISIS**
- <br>**GET/analisis**
+ <br>**POST/analisis**
  <br>Crea un analisis
  <br>**Request body**
  <br>[
@@ -167,7 +155,7 @@ telefono:"";<br>
    <br>especialidades:string[];
 <br>}
 <br>]
-<br><br>**POST/analisis**
+<br><br>**GET/analisis**
 <br>Devuelve el listado de todos los analisis
 <br>**Formato de respuesta**
 <br>
