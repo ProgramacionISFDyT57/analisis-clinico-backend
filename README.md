@@ -138,7 +138,64 @@ telefono:"";<br>
  <br>**Request body**
  <br>[
  <br>{
-
-
+<br>especialidad:"",
+<br>determinaciones:string[]
+<br>}
+<br>**Formato de respuesta**
+<br>{
+<br>"mensaje":"se pudo cargar la especialidad"
+<br>}**GET/especialidad**
+<br>Devuelve el listado de las especialidades
+<br>**Formato de respuesta**
+<br>[
+<br>{
+        <br>"id": "1",
+        <br>"determinaciones": [],
+        <br>"especialidad": ""
+    <br>}
+    <br>]
+ <br><br>**ANALISIS**
+ <br>**GET/analisis**
+ <br>Crea un analisis
+ <br>**Request body**
+ <br>[
+ <br>{
+    <br>pacienteid:" ",
+    <br>fecha:" ",
+    <br>medico:" ",
+    <br>codigo:" ",
+   <br>especialidades:string[];
+<br>}
+<br>]
+<br><br>**POST/analisis**
+<br>Devuelve el listado de todos los analisis
+<br>**Formato de respuesta**
+<br>
+<br><br>**USUARIO**
+<br><br>**POST/usuario**
+<br>Carga un usuario
+<br>**Request body**
+<br>[
+<br>{
+<br> nombre:"",
+    <br>mail:"",
+    <br>clave:""
+<br>}
+<br>]
+<br>**Formato de respuesta**
+<br>{
+"mensaje":"se pudo cargar el usuario"
+<br>}
+<br>**GET/usuario**
+<br>Devuelve el listado de todos los usuarios
+<br>**Formato de respuesta**
+<br>[
+<br>{
+<br>"id":" ",
+<br>"nombre":" ",
+<br>"mail":" ",
+<br>"clave":" "
+<br>}
+<br>]
 
 
