@@ -35,13 +35,13 @@ se registra cada paciente y sus determinaciones correspondientes. Optimizar un 5
 <br>"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
 <br>}
 <br>**PACIENTES**<br>
-<br>**GET/pacientes**<br>
+<br>**GET/pacientes**
 <br>Devuelve el listado de todos los pacientes<br>
 <br>**Requiere rol de acceso**<br>
 -Técnicos y bioquimicos<br>
 <br>**Formato de respuesta**<br>
-<br>[<br>
-   {
+<br>[
+   <br>{
         "_id": "1",<br>
         "nombre": "",<br>
         "apellido": "",<br>
@@ -50,7 +50,7 @@ se registra cada paciente y sus determinaciones correspondientes. Optimizar un 5
     }<br>
 ]<br>
 <br>**POST/pacientes**<br>
-<br>Crea un usuario<br>
+<br>Crea un paciente<br>
 <br>**Requiere rol de acceso**<br>
 -Técnicos y bioquímicos<br>
 <br>**Request body**<br>
@@ -66,7 +66,39 @@ telefono:"";<br>
 <br>{<br>
 <br>"mensaje":"Se pudo cargar el paciente"<br>
 <br>}
-
+<br>**GET/Pacientes**<br>
+<br>Devuelve el listado de todos los pacientes<br>
+<br>**Formato de respuesta**
+<br>[
+<br>{
+        <br>"_id": "5d8d4d9a64069925984ef2b7",
+        <br>"nombre": " ",
+        <br>"apellido":" ",
+        <br>"dni":" ",
+        <br>"telefono":" "
+    <br>}
+    <br>]
+<br>**POST/Medico**
+<br>Carga un medico
+<br><br>**Request body**
+<br>[
+<br>{
+<br>"nombre":" ",
+<br>"apellido":" "
+<br}
+<br>]
+<br>**Formato de respuesta**
+<br>Mensaje:"se pudo cargar el medico"
+<br>**GET/Medico**
+<br>Devuelve el listado de los medicos
+<br><br> **Formato de respuesta**
+<br>[
+    <br>{
+        <br>"_id": "",
+        <br>"nombre": "",
+        <br>"apellido": ""
+    <br>}
+<br>]
 
 
 
